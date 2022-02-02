@@ -120,6 +120,9 @@ static bool input_linux_check_toggle(InputLinux *il)
         return (il->keydown[KEY_LEFTCTRL] ||
                 il->keydown[KEY_RIGHTCTRL]) &&
             il->keydown[KEY_SCROLLLOCK];
+    
+    case GRAB_TOGGLE_KEYS_CALC:
+        return il->keydown[KEY_CALC];
 
     case GRAB_TOGGLE_KEYS__MAX:
         /* avoid gcc error */
@@ -131,9 +134,14 @@ static bool input_linux_check_toggle(InputLinux *il)
 static bool input_linux_should_skip(InputLinux *il,
                                     struct input_event *event)
 {
-    return (il->grab_toggle == GRAB_TOGGLE_KEYS_SCROLLLOCK ||
-            il->grab_toggle == GRAB_TOGGLE_KEYS_CTRL_SCROLLLOCK) &&
-            event->code == KEY_SCROLLLOCK;
+    if (il->grab_toggle == GRAB_TOGGLE_KEYS_SCROLLLOCK ||
+            il->grab_toggle == GRAB_TOGGLE_KEYS_CTRL_SCROLLLOCK) {
+        return event->code == KEY_SCROLLLOCK;
+    }
+    if (il->grab_toggle == GRAB_TOGGLE_KEYS_CALC) {
+        return event->code == KEY_CALC;
+    }
+    return false;
 }
 
 static void input_linux_handle_keyboard(InputLinux *il,

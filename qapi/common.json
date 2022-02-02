@@ -196,7 +196,7 @@
 ##
 { 'enum': 'GrabToggleKeys',
   'data': [ 'ctrl-ctrl', 'alt-alt', 'shift-shift','meta-meta', 'scrolllock',
-            'ctrl-scrolllock' ] }
+            'ctrl-scrolllock', 'calc' ] }
 
 ##
 # @HumanReadableText:
